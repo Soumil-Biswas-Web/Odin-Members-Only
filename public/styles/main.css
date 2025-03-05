@@ -1,0 +1,143 @@
+* {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1, h2, p {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    border: none;
+}
+
+body {
+    background-color: rgb(27, 27, 27);
+    color: white;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    min-height: 100vh;
+    justify-content: space-between;
+}
+
+header, footer {
+    width: 100%;
+    min-height: 100px;
+    text-align: center;
+}
+
+header {
+    border-bottom: 2px white solid;
+    display: flex;
+    align-items: center;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+header div {
+    display: flex;
+    align-items: center;
+}
+
+header>div {
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+header>div>div {
+    gap: 10px;
+}
+
+header p {
+    border: 2px solid white;
+    border-radius: 5px;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.Table {    
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.trainer-bloc {
+    width: 90%;
+    border: 2px white solid;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px;
+    border: 2px white solid;
+    border-radius: 5px;
+    margin-top: 10px;
+    padding: 5px;
+}
+
+#modalWindow {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.box {
+    border-radius: 10px;
+    background-color: rgb(27, 27, 27);
+    padding: 20px;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+}
+
+#newMessageForm {
+    width: 50vw;
+    height: 50vh;
+}
+
+#message {
+    height: 100%;
+}
+
+.messageWall {
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+.post {
+    padding: 20px;
+    border-radius: 20px;
+    background-color: dimgray;
+}
+
+.post p:last-child {
+    margin-top: 20px;
+}
+
+footer {
+    border-top: 2px white solid;
+    padding-top: 20px;
+}

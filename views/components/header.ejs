@@ -1,0 +1,55 @@
+<header>
+    <div>
+        <a href="/"><h1>Odin-Members-Only</h1></a>
+        <div class="default">
+            <a href="/auth/login"><p>Login</p></a>
+            <a href="/auth/signUp"><p>Sign Up</p></a>
+        </div>
+        <div class="logged_in" style="display: none;">
+            <p id="userGreeting">Welcome, user</p> 
+            <a href="/add"><p>+ New Post</p></a>
+            <button id="logoutBtn">Logout</button>
+        </div>
+    </div>
+</header>
+
+<script>
+    document.addEventListener("DOMContentLoaded", async function() {
+        const token = localStorage.getItem('token');
+        // console.log(token);
+    
+        if (token) {
+            try {
+                const response = await fetch('/auth/me', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+    
+                if (response.ok) {
+                    const user = await response.json();
+    
+                    // Hide default div and show logged_in div
+                    document.querySelector('.default').style.display = 'none';
+                    document.querySelector('.logged_in').style.display = 'flex';
+    
+                    // Set username dynamically
+                    document.getElementById('userGreeting').textContent = `Welcome, ${user.username}`;
+    
+                } else {
+                    // Token might be invalid, remove it
+                    localStorage.removeItem('token');
+                }
+            } catch (error) {
+                console.error('Error verifying user:', error);
+            }
+        }
+    
+        // Logout button functionality
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            localStorage.removeItem('token'); // Remove token from localStorage
+            window.location.href = '/'; // Redirect to homepage
+        });
+    });
+    </script>

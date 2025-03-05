@@ -1,0 +1,65 @@
+<!-- Home page display, for displaying all messages -->
+
+<div>
+    <% if (messages.length === 0) { %>
+        <p>Such empty, much wow...</p>
+    <% } else { %>
+        <div class="messageWall">
+            <% for (let message of messages) {%>
+                <div class="post">
+                    <h3 class="anon">Anon</h3>
+                    <h3 class="nonanon" style="display: none;"><%= message.username %></h3>
+                    <p><%= message.message %></p>
+                    <p class="timestamp" style="display: none;"><%= message.formattedTimestamp %></p>
+                </div>
+            <% } %>
+        </div>
+    <% } %>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", async function() {
+        const token = localStorage.getItem('token');
+        // console.log(token);
+    
+        if (token) {
+            try {
+                const response = await fetch('/auth/me', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+    
+                if (response.ok) {
+                    const user = await response.json();
+    
+                    // Loop through all messages and update display
+                    document.querySelectorAll('.post').forEach(post => {
+                        const anon = post.querySelector('.anon');
+                        const nonanon = post.querySelector('.nonanon');
+                        const timestamp = post.querySelector('.timestamp');
+
+                        if (anon && nonanon) {
+                            anon.style.display = 'none';
+                            nonanon.style.display = 'block';
+                            timestamp.style.display = 'block';
+                        }
+                    });         
+    
+                } else {
+                    // Token might be invalid, remove it
+                    localStorage.removeItem('token');
+                }
+            } catch (error) {
+                console.error('Error verifying user:', error);
+            }
+        }
+    
+        // Logout button functionality
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            localStorage.removeItem('token'); // Remove token from localStorage
+            window.location.href = '/'; // Redirect to homepage
+        });
+    });
+</script>

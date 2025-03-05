@@ -1,0 +1,65 @@
+<!-- For for signing up new user -->
+
+<form method="POST" id="signUpForm">
+    <div class="firstName">
+        <label for="firstName">First Name: </label>
+        <input type="text" name="firstName" id="firstName" required>
+    </div>
+    <div class="lastName">
+        <label for="lastName">Last Name: </label>
+        <input type="text" name="lastName" id="lastName" required>
+    </div>
+    <div class="username">
+        <label for="username">Username: </label>
+        <input type="text" name="username" id="username" required>
+    </div>
+    <div class="password">
+        <label for="password">Password: </label>
+        <input type="password" name="password" id="password" required>
+    </div>
+    <div class="password2">
+        <label for="password2">Enter Password Again: </label>
+        <input type="password" name="password2" id="password2" required>
+    </div>
+    <div class="passKey">
+        <label for="passKey">Enter The Funny Number: </label>
+        <input type="text" name="passKey" id="passKey" required>
+    </div>    
+    <button type="submit">Sign Up</button>
+</form>
+
+<script>
+    document.getElementById('signUpForm').addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent default form submission
+    
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;        
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const password2 = document.getElementById('password2').value;        
+        const passKey = document.getElementById('passKey').value;
+    
+        try {
+            const response = await fetch('/auth/signUp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ firstName, lastName, username, password, password2, passKey })
+            });
+    
+            const data = await response.json();
+            
+            if (response.ok) {
+                alert('Sign Up Successful!');
+                window.location.href = '/'; // Redirect user to dashboard
+            } else {
+                alert(data.message || 'Sign Up failed!');
+            }
+        } catch (error) {
+            console.log(error);
+            console.error('Sign Up error:', error);
+            alert('An error occurred. Please try again.');
+        }
+    });
+</script>

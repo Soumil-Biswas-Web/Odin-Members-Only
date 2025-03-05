@@ -1,0 +1,42 @@
+<!-- Form to write new Message -->
+
+<form method="POST" action="/add/newMessage" id="newMessageForm">
+    <label for="message">Write New Message: </label>
+    <textarea name="message" id="message" required></textarea>
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+    document.getElementById('newMessageForm').addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent default form submission
+    
+        const message = document.getElementById('message').value;
+
+        const token = localStorage.getItem('token');        
+    
+        try {
+            const response = await fetch('/add/newMessage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ message })
+            });
+    
+            const data = await response.json();
+            
+            if (response.ok) {
+                localStorage.setItem('token', data.token); // Store token in localStorage
+                alert('Post Successful!');
+                window.location.href = '/'; // Redirect user to dashboard
+            } else {
+                alert(data.message || 'Failed to post message!');
+            }
+        } catch (error) {
+            console.log(error);
+            console.error('Error saving message:', error);
+            alert('An error occurred. Please try again.');
+        }
+    });
+</script>
